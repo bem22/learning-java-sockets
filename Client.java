@@ -15,6 +15,7 @@ public class Client {
 	public Client(String serverName){
 		try{
 			CSSocket = new Socket(serverName, Port.number);
+			toServer = new PrintStream(CSSocket.getOutputStream());
 		}
 		catch (IOException e){
 			

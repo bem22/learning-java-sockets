@@ -6,7 +6,7 @@ import java.io.*;
 public class Server {
 	ServerSocket SSocket;
 	Socket SCSocket;
-	
+	String text;
 	public Server() {
 		
 		try {
@@ -21,8 +21,15 @@ public class Server {
 	
 	public void run(){
 		try{
+			
 			while(true){
 				SCSocket = SSocket.accept();
+				BufferedReader fromClient = new BufferedReader(new InputStreamReader(SCSocket.getInputStream()));
+				while((text = fromClient.readLine()) != null){
+					
+					System.out.println(text);
+					
+				}
 				
 			}
 			
@@ -31,6 +38,7 @@ public class Server {
 		catch (IOException e){
 			
 		}
+		
 	}
 
 }
