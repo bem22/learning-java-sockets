@@ -6,10 +6,11 @@ import java.io.*;
 public class Client {
 	
 	Socket CSSocket;
+	String serverName;
 	
-	public Client() {
+	public Client(String serverName){
 		try{
-			CSSocket = new Socket("localhost", Port.number);
+			CSSocket = new Socket(serverName, Port.number);
 		}
 		catch (IOException e){
 			
