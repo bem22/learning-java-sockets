@@ -11,7 +11,7 @@ public class Server {
 		
 		try {
 			SSocket = new ServerSocket(Port.number);
-			
+			UserCredentials namePassword = new UserCredentials();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
