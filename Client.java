@@ -8,6 +8,10 @@ public class Client {
 	Socket CSSocket;
 	String serverName;
 	
+	PrintStream toServer;
+	BufferedReader fromUser;
+	BufferedReader fromServer;
+	
 	public Client(String serverName){
 		try{
 			CSSocket = new Socket(serverName, Port.number);
@@ -19,8 +23,22 @@ public class Client {
 	}
 	
 	public void run(){
-		while(true);
 		
+		BufferedReader fromUser = new BufferedReader(new InputStreamReader(System.in));
+		
+			try {
+				
+				while(true){
+					String text;
+					text = fromUser.readLine();
+					toServer.println(text);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (NullPointerException e){
+				
+			}
 	}
+		
 
 }
