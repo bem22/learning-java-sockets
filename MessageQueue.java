@@ -8,14 +8,10 @@ public class MessageQueue {
 	    queue.offer(m);
 	}
 	
-	public Message take() {
+	public Message take() throws InterruptedException {
 
-	    while (true) {
-	      try {
 	        return(queue.take());
 	        
-	      } catch (InterruptedException e) {}
-	    }
 	}
 
 }

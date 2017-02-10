@@ -1,11 +1,12 @@
 package ass2;
 
-import java.io.BufferedReader;
-import java.io.PrintStream;
+import java.io.*;
 
 public class ServerSender extends Thread {
 	private MessageQueue userQueue;
 	private PrintStream toClient;
+	
+	
 	public ServerSender(PrintStream toClient, MessageQueue userQueue) {
 		this.userQueue = userQueue;
 		this.toClient = toClient;
@@ -15,14 +16,14 @@ public class ServerSender extends Thread {
 		toClient.println(msg);
 		
 	}
-	
+	@Override
 	public void run(){
-		while(true){
-			Message msg = userQueue.take();
-			toClient.println(msg.getSender() + ": " + msg.getText());
-			
-		}
-		
+		try{
+			while(true){
+				Message msg = userQueue.take();
+				toClient.println(msg.getSender() + ": " + msg.getText());
+			}
+		}catch(InterruptedException e){}
 	}
-
+	
 }
