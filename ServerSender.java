@@ -19,7 +19,8 @@ public class ServerSender extends Thread {
 	public void run(){
 		while(true){
 			Message msg = userQueue.take();
-			toClient.println(msg);
+			toClient.println(msg.getSender() + ": " + msg.getText());
+			
 		}
 		
 	}

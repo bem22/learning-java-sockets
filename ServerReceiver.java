@@ -9,23 +9,17 @@ public class ServerReceiver extends Thread {
 	private BufferedReader fromClient;
 	private LoggedUsers activeUsers;
 	private ServerSender sender;
-	
-	public ServerReceiver(ServerSender sender, String userName, BufferedReader fromClient, LoggedUsers activeUsers) {
+	private boolean logged;
+	public ServerReceiver(ServerSender sender, String userName, BufferedReader fromClient, LoggedUsers activeUsers, boolean logged) {
 		this.userName = userName;
 		this.fromClient = fromClient;
 		this.activeUsers = activeUsers;
 		this.sender = sender;
+		this.logged = logged;
 	}
 	
-	public void logout(){
-		
-		
-	}
 	
-	public void quit(){
-		
-	}
-	
+
 	public void run(){
 		try{
 			while(true){
@@ -49,15 +43,15 @@ public class ServerReceiver extends Thread {
 							else sender.sendInfo("User is offline.");
 						}
 						else sender.sendInfo("null recipient");
-					
-					
 				}
 				
-				else if(action.equals("quit")){
+				else if (action.equals("logout") || action.equals("quit")){
 					
-				}
-				else if (action.equals("logout")){
-					
+					activeUsers.logout(userName);
+					logged = false;
+					sender.sendInfo("You have logged out.");
+					sender.interrupt();
+					return;
 				}
 			}
 		} catch (IOException e){}

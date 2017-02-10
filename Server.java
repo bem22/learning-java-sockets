@@ -46,7 +46,11 @@ public class Server {
 									System.out.println("User " + userName + " has logged in");
 									toClient.println("You have succesfuly logged in!");
 								
-								// TO DO (START THREADS)
+									ServerSender sender = new ServerSender(toClient, activeUsers.getQueue(userName)); // BBBBBBB
+									ServerReceiver receiver = new ServerReceiver(sender, userName, fromClient, activeUsers, logged); // AAAAAAAA
+									
+									sender.start();
+									receiver.start();
 								}
 								else if(!namePassword.getPassword(userName).equals(password))
 										toClient.println("Incorrect credentials. Please retry.");
@@ -74,10 +78,9 @@ public class Server {
 							else toClient.println("This username is already taken");
 					}
 					
-				} // End !ogged
+				} 
 				
-				ServerSender sender = new ServerSender(toClient, activeUsers.getQueue(userName)); // BBBBBBB
-				ServerReceiver receiver = new ServerReceiver(sender, userName, fromClient, activeUsers); // AAAAAAAA
+				
 				
 			} catch (IOException e){
 				System.out.println("Client closed.");

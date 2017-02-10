@@ -17,6 +17,9 @@ class LoggedUsers {
 		if(queueTable.containsKey(userName))
 			return true;
 		else return false;
-		
+	}
+	
+	public void logout(String userName){
+		queueTable.remove(userName, queueTable.get(userName));
 	}
 }
