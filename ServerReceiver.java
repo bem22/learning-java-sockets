@@ -8,16 +8,21 @@ public class ServerReceiver extends Thread {
 	private String userName;
 	private BufferedReader fromClient;
 	private LoggedUsers activeUsers;
+	private FLAG_logged logged;
 
 	
-	public ServerReceiver(ServerSender sender, String userName, BufferedReader fromClient, LoggedUsers activeUsers) {
+	public ServerReceiver(ServerSender sender, String userName, BufferedReader fromClient, LoggedUsers activeUsers, FLAG_logged logged) {
 		this.sender = sender;
 		this.userName = userName;
 		this.fromClient = fromClient;
 		this.activeUsers = activeUsers;
+		this.logged = logged;
 	}
 	
 	
+	
+
+
 	@Override
 	public void run(){
 		sender.start();
@@ -25,13 +30,15 @@ public class ServerReceiver extends Thread {
 			while(true){
 				String action = fromClient.readLine();
 				
-				if (action.equals("logout") || action.equals("quit")){
+				if (action.equals("logout")){
+					System.out.println("User logged out");
 					activeUsers.logout(userName);
-					System.out.println(userName + " logged out");
-					sender.sendInfo("You have logged out");
+					logged.setValue(false);
 					sender.interrupt();
-					break;
+					return;
 				}
+				
+				
 				
 				if(action.equals("message")){
 					String recipient = fromClient.readLine();
