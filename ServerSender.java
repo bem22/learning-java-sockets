@@ -1,7 +1,10 @@
 package ass2;
 
-public class ServerSender extends Thread {
+import java.io.BufferedReader;
 
+public class ServerSender extends Thread {
+	
+	
 	public ServerSender() {
 	}
 	

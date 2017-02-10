@@ -27,8 +27,8 @@ public class Client {
 	public void run(){
 		
 		if(CSSocket.isConnected()){
-			ClientSender sender = new ClientSender(toServer);
-			ClientReceiver receiver = new ClientReceiver(fromServer);
+			ClientSender sender = new ClientSender(toServer); // AAAAAAAA (Matches AAAAA in Server)
+			ClientReceiver receiver = new ClientReceiver(fromServer); // BBBBBB (Matches BBBBB in Server)
 			
 			sender.start();
 			receiver.start();

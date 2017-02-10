@@ -26,7 +26,7 @@ public class Server {
 				
 				PrintStream toClient = new PrintStream(SCSocket.getOutputStream());
 				BufferedReader fromClient = new BufferedReader(new InputStreamReader(SCSocket.getInputStream()));
-				
+				String userName = null;
 				
 				boolean logged = false;
 				try{
@@ -36,7 +36,7 @@ public class Server {
 					String action = fromClient.readLine();
 					
 					if(action.equals("login")){
-						String userName = fromClient.readLine();
+						userName = fromClient.readLine();
 						if(namePassword.users.containsKey(userName)){
 							if(!activeUsers.isLogged(userName)){
 								String password = fromClient.readLine();
@@ -62,7 +62,7 @@ public class Server {
 					}
 
 					else if(action.equals("register")){
-						String userName = fromClient.readLine();
+							userName = fromClient.readLine();
 							if(!namePassword.users.containsKey(userName)){
 								String password = fromClient.readLine();
 								if(password != null && !password.equals("") && password.length() > 3){
@@ -74,7 +74,11 @@ public class Server {
 							else toClient.println("This username is already taken");
 					}
 					
-				} // End !isLogged
+				} // End !ogged
+				
+				ServerSender sender = new ServerSender(toClient, activeUsers.getQueue(userName)); // BBBBBBB
+				ServerReceiver receiver = new ServerReceiver(sender, userName, fromClient, activeUsers); // AAAAAAAA
+				
 			} catch (IOException e){
 				System.out.println("Client closed.");
 			}
