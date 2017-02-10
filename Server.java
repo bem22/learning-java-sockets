@@ -43,9 +43,14 @@ public class Server {
 					
 					if(action.equals("login")){
 						String userName = fromClient.readLine();
-						if(!activeUsers.isLogged(userName)){
-							activeUsers.add(userName);
-							System.out.println("User " + userName + " has logged in");
+						String password = fromClient.readLine();
+						if(namePassword.users.containsKey(userName)){
+							if(!activeUsers.isLogged(userName)){
+								if(namePassword.getPassword(userName).equals(password)){
+								activeUsers.add(userName);
+								System.out.println("User " + userName + " has logged in");
+								}
+							}
 						}
 					}
 					

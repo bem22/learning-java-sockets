@@ -10,5 +10,10 @@ public class UserCredentials {
 		users.put("nume2", "pw2");
 		users.put("nume3", "pw3");
 	}
+	
+	public String getPassword(String userName){
+		return users.get(userName);
+		
+	}
 
 }
