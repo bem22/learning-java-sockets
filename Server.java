@@ -60,11 +60,21 @@ public class Server {
 						System.out.println("User quit");
 						break;
 					}
+
+					else if(action.equals("register")){
+						String userName = fromClient.readLine();
+							if(!namePassword.users.containsKey(userName)){
+								String password = fromClient.readLine();
+								if(password != null && !password.equals("") && password.length() > 3){
+									namePassword.users.put(userName, password);
+								}
+								else toClient.println("Password too short or empty");
+							}
+							
+							else toClient.println("This username is already taken");
+					}
 					
-					
-					
-					
-				}
+				} // End !isLogged
 			} catch (IOException e){
 				System.out.println("Client closed.");
 			}
