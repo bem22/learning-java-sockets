@@ -42,9 +42,10 @@ public class Server {
 					String action = fromClient.readLine();
 					
 					if(action.equals("login")){
-						String accountName = fromClient.readLine();
-						if(!activeUsers.isLogged(accountName)){
-							activeUsers.add(accountName);
+						String userName = fromClient.readLine();
+						if(!activeUsers.isLogged(userName)){
+							activeUsers.add(userName);
+							System.out.println("User " + userName + " has logged in");
 						}
 					}
 					
