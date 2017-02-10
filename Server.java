@@ -11,7 +11,7 @@ public class Server {
 		
 		try {
 			SSocket = new ServerSocket(Port.number);
-			UserCredentials namePassword = new UserCredentials();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -20,16 +20,44 @@ public class Server {
 	
 	
 	public void run(){
+		
+		
+		UserCredentials namePassword = new UserCredentials(); // ALL REGISTERED USERS
+		
+		LoggedUsers activeUsers = new LoggedUsers(); // ALL LOGGED USERS (0 when the server starts)
+		
+		
 		try{
 			
 			while(true){
 				SCSocket = SSocket.accept();
+				
+				System.out.println("New client on server");
+				
 				BufferedReader fromClient = new BufferedReader(new InputStreamReader(SCSocket.getInputStream()));
-				while((text = fromClient.readLine()) != null){
+				
+				boolean logged = false;
+				
+				while(!logged){
+					String action = fromClient.readLine();
 					
-					System.out.println(text);
+					if(action.equals("login")){
+						String accountName = fromClient.readLine();
+						if(!activeUsers.isLogged(accountName)){
+							activeUsers.add(accountName);
+						}
+					}
 					
 				}
+				
+				
+				
+				
+				
+				
+			
+				
+			
 				
 			}
 			
