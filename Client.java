@@ -7,39 +7,40 @@ public class Client {
 	
 	Socket CSSocket;
 	String serverName;
-	
-	PrintStream toServer;
-	BufferedReader fromUser;
-	BufferedReader fromServer;
+	PrintStream toServer = null;
+    BufferedReader fromServer = null;
+
+
 	
 	public Client(String serverName){
 		try{
+			
 			CSSocket = new Socket(serverName, Port.number);
 			toServer = new PrintStream(CSSocket.getOutputStream());
+			fromServer = new BufferedReader(new InputStreamReader(CSSocket.getInputStream()));
 		}
 		catch (IOException e){
-			
 		}
 		
 	}
 	
 	public void run(){
 		
-		BufferedReader fromUser = new BufferedReader(new InputStreamReader(System.in));
+		if(CSSocket.isConnected()){
+			ClientSender sender = new ClientSender(toServer);
+			ClientReceiver receiver = new ClientReceiver(fromServer);
+			
+			sender.start();
+			receiver.start();
 		
-			try {
-				
-				while(true){
-					String text;
-					text = fromUser.readLine();
-					toServer.println(text);
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (NullPointerException e){
-				
-			}
+		
+			try{
+				sender.join();
+			    toServer.close();
+			    receiver.join();
+			    fromServer.close();
+			    CSSocket.close();
+			} catch (IOException e){} catch(InterruptedException d){}     
+		}
 	}
-		
-
 }

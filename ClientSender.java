@@ -1,11 +1,28 @@
 package ass2;
 
-public class ClientSender extends Thread{
+import java.io.*;
 
-	public ClientSender() {
+public class ClientSender extends Thread{
+	private PrintStream toServer;
+	public ClientSender(PrintStream toServer) {
+		this.toServer = toServer;
 	}
 	
 	public void run(){
+		
+		BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
+		
+		
+		try{
+			while(true){
+				String s = userInput.readLine();
+				toServer.println(s);
+				
+				if(s.equals("quit"))
+					break;
+			}
+		} catch (IOException e) {}
+		
 		
 	}
 

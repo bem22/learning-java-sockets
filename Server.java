@@ -6,15 +6,13 @@ import java.io.*;
 public class Server {
 	ServerSocket SSocket;
 	Socket SCSocket;
-	String text;
+
 	public Server() {
 		
 		try {
 			SSocket = new ServerSocket(Port.number);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 	
@@ -23,7 +21,6 @@ public class Server {
 		
 		
 		UserCredentials namePassword = new UserCredentials(); // ALL REGISTERED USERS
-		
 		LoggedUsers activeUsers = new LoggedUsers(); // ALL LOGGED USERS (0 when the server starts)
 		
 		
@@ -31,14 +28,19 @@ public class Server {
 			
 			while(true){
 				SCSocket = SSocket.accept();
-				
 				System.out.println("New client on server");
 				
+			
+				
+				
+				PrintStream toClient = new PrintStream(SCSocket.getOutputStream());
 				BufferedReader fromClient = new BufferedReader(new InputStreamReader(SCSocket.getInputStream()));
-				
 				boolean logged = false;
-				
+				try{
 				while(!logged){
+					
+						
+					
 					String action = fromClient.readLine();
 					
 					if(action.equals("login")){
@@ -48,23 +50,21 @@ public class Server {
 							if(!activeUsers.isLogged(userName)){
 								if(namePassword.getPassword(userName).equals(password)){
 								activeUsers.add(userName);
+								logged = true;
 								System.out.println("User " + userName + " has logged in");
+								
+								// TO DO (START THREADS)
 								}
+								else if(!namePassword.getPassword(userName).equals(password))
+										System.out.println("wrong pw");
 							}
 						}
 					}
 					
 				}
-				
-				
-				
-				
-				
-				
-			
-				
-			
-				
+			} catch (IOException e){
+				System.out.println("User abandoned");
+			}
 			}
 			
 		}
