@@ -19,10 +19,6 @@ public class ServerReceiver extends Thread {
 		this.logged = logged;
 	}
 	
-	
-	
-
-
 	@Override
 	public void run(){
 		sender.start();
@@ -31,15 +27,14 @@ public class ServerReceiver extends Thread {
 				String action = fromClient.readLine();
 				
 				if (action.equals("logout")){
+					System.out.println("a" + logged.getValue());
+					logged.setValue(false);
+					System.out.println("a" + logged.getValue());
 					System.out.println("User logged out");
 					activeUsers.logout(userName);
-					logged.setValue(false);
 					sender.interrupt();
-					return;
+					break;
 				}
-				
-				
-				
 				if(action.equals("message")){
 					String recipient = fromClient.readLine();
 						if(recipient!=null){
@@ -58,16 +53,9 @@ public class ServerReceiver extends Thread {
 						}
 						else sender.sendInfo("null recipient");
 				}
-				
-				
 			}
 			
 		} catch (IOException e){}
 		sender.interrupt();
-		
-	
-		
 	}
-
-
 }

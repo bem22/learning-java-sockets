@@ -33,6 +33,7 @@ public class ServerThread extends Thread{
 			
 			logged.setValue(false);
 			while(true){
+				System.out.println("a" + logged.getValue());
 				if(logged.getValue() == false){
 					toClient.println("Please register and/or login");
 					
@@ -62,6 +63,7 @@ public class ServerThread extends Thread{
 						}
 						else toClient.println("Incorrect credentials. Please retry.");
 					}
+					
 					else if(action.equals("register")){
 							userName = fromClient.readLine();
 							if(!namePassword.users.containsKey(userName)){
