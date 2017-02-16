@@ -33,7 +33,6 @@ public class ServerThread extends Thread{
 			
 			logged.setValue(false);
 			while(true){
-				System.out.println("a" + logged.getValue());
 				if(logged.getValue() == false){
 					toClient.println("Please register and/or login");
 					
@@ -49,8 +48,8 @@ public class ServerThread extends Thread{
 								if(namePassword.getPassword(userName).equals(password)){
 									activeUsers.add(userName);
 									logged.setValue(true);
-									System.out.println("User " + userName + " has logged_FLAG in");
-									toClient.println("You have succesfuly logged_FLAG in!");
+									System.out.println("User " + userName + " has logged in");
+									toClient.println("You have succesfuly logged in!");
 									sender = new ServerSender(toClient, activeUsers.getQueue(userName)); // BBBBBBB
 									receiver = new ServerReceiver(sender, userName, fromClient, activeUsers, logged); // AAAAAAAA
 									receiver.setName("RECEIVER_THREAD");
@@ -59,7 +58,7 @@ public class ServerThread extends Thread{
 								else if(!namePassword.getPassword(userName).equals(password))
 										toClient.println("Incorrect credentials. Please retry.");
 							}
-							else toClient.println("You are already logged_FLAG in from another client.");
+							else toClient.println("You are already logged in from another client.");
 						}
 						else toClient.println("Incorrect credentials. Please retry.");
 					}
