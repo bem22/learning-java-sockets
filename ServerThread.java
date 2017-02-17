@@ -74,10 +74,6 @@ public class ServerThread extends Thread{
 							}
 							else toClient.println("This username is already taken");
 					}
-					else if(action.equals("quit")){
-						System.out.println("hi");
-						Thread.currentThread().interrupt();
-					}
 				}
 			}
 		}catch(IOException e){}
