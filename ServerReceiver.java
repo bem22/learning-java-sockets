@@ -21,7 +21,7 @@ public class ServerReceiver extends Thread {
 	
 	@Override
 	public void run(){
-		sender.start();
+		this.sender.start();
 		try{
 			while(true){
 				String action = fromClient.readLine();
@@ -32,7 +32,7 @@ public class ServerReceiver extends Thread {
 					System.out.println("User logged out");
 					activeUsers.logout(userName);
 					this.sender.interrupt();
-					break;
+					return;
 				}
 				
 				
@@ -55,8 +55,7 @@ public class ServerReceiver extends Thread {
 						else sender.sendInfo("null recipient");
 				}
 			}
-			
 		} catch (IOException e){}
-		this.sender.interrupt();
+		
 	}
 }
