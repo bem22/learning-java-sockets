@@ -18,8 +18,11 @@ public class ClientSender extends Thread{
 				String s = userInput.readLine();
 				toServer.println(s);
 				
-				if(s.equals("quit") )
+				if(s.equals("quit") ){
+
+					toServer.print(s);
 					break;
+				}
 			}
 		} catch (IOException e) {}
 		
