@@ -21,6 +21,11 @@ public class ServerReceiver extends Thread {
 		this.quit = quit;
 	}
 	private void logout(){
+		this.logged.setValue(false);
+		System.out.println(userName + " logged out");
+		this.activeUsers.logout(userName);
+		this.sender.interrupt();
+		Thread.currentThread().interrupt();
 	}
 	private void quit(){
 		logout();
@@ -34,11 +39,7 @@ public class ServerReceiver extends Thread {
 				String action = this.fromClient.readLine();
 				
 				if (action.equals("logout")){
-					this.logged.setValue(false);
-					System.out.println(userName + " logged out");
-					this.activeUsers.logout(userName);
-					this.sender.interrupt();
-					Thread.currentThread().interrupt();
+					logout();
 				}
 				/////////////////////////////////////////////
 				
@@ -62,6 +63,9 @@ public class ServerReceiver extends Thread {
 				}
 				//////////////////////////////////////////////////////////
 				
+				if (action.equals("quit")){
+					quit();
+				}
 			}
 		} catch (IOException e){}
 		

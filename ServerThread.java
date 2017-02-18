@@ -33,11 +33,7 @@ public class ServerThread extends Thread{
 			this.quit.setValue(false);
 			
 			while(true){
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				
 				if(this.logged.getValue() == false){
 					toClient.println("Please register and/or login");
 					

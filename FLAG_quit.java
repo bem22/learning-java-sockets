@@ -4,10 +4,10 @@ public class FLAG_quit {
 	
 	private boolean value = false;
 	
-	public boolean getValue(){
+	public synchronized boolean getValue(){
 		return value;
 	}
-	public void setValue(boolean value){
+	public synchronized void setValue(boolean value){
 		this.value = value;
 	}
 
