@@ -14,8 +14,8 @@ public class ServerSender extends Thread {
 	
 	public void sendInfo(String msg){
 		toClient.println(msg);
-		
 	}
+	
 	@Override
 	public void run(){
 		try{

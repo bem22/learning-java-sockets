@@ -6,5 +6,4 @@ public class LaunchServer {
 		Server server1 = new Server();
 		server1.run();
 	}
-
 }

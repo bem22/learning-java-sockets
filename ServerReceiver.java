@@ -9,32 +9,38 @@ public class ServerReceiver extends Thread {
 	private BufferedReader fromClient;
 	private LoggedUsers activeUsers;
 	private FLAG_logged logged;
+	private FLAG_quit quit;
 
 	
-	public ServerReceiver(ServerSender sender, String userName, BufferedReader fromClient, LoggedUsers activeUsers, FLAG_logged logged) {
+	public ServerReceiver(ServerSender sender, String userName, BufferedReader fromClient, LoggedUsers activeUsers, FLAG_logged logged, FLAG_quit quit) {
 		this.sender = sender;
 		this.userName = userName;
 		this.fromClient = fromClient;
 		this.activeUsers = activeUsers;
 		this.logged = logged;
+		this.quit = quit;
 	}
-	
+	private void logout(){
+	}
+	private void quit(){
+		logout();
+		quit.setValue(true);
+	}
 	@Override
 	public void run(){
 		this.sender.start();
 		try{
-			while(true){
-				String action = fromClient.readLine();
+			while(!Thread.currentThread().isInterrupted()){
+				String action = this.fromClient.readLine();
 				
 				if (action.equals("logout")){
-					logged.setValue(false);
-					
-					System.out.println("User logged out");
-					activeUsers.logout(userName);
+					this.logged.setValue(false);
+					System.out.println(userName + " logged out");
+					this.activeUsers.logout(userName);
 					this.sender.interrupt();
-					return;
+					Thread.currentThread().interrupt();
 				}
-				
+				/////////////////////////////////////////////
 				
 				if(action.equals("message")){
 					String recipient = fromClient.readLine();
@@ -54,6 +60,8 @@ public class ServerReceiver extends Thread {
 						}
 						else sender.sendInfo("null recipient");
 				}
+				//////////////////////////////////////////////////////////
+				
 			}
 		} catch (IOException e){}
 		

@@ -1,7 +1,7 @@
 package ass2;
 
-public class FLAG_logged {
-
+public class FLAG_quit {
+	
 	private boolean value = false;
 	
 	public boolean getValue(){

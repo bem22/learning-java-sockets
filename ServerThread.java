@@ -7,7 +7,8 @@ public class ServerThread extends Thread{
 	private Socket SCSocket = null;
 	private LoggedUsers activeUsers;
 	private UserCredentials namePassword;
-	
+	private FLAG_logged logged = new FLAG_logged();
+	private FLAG_quit quit = new FLAG_quit();
 	
 	
 	public ServerThread(Socket SCSocket, LoggedUsers activeUsers, UserCredentials namePassword){
@@ -17,29 +18,32 @@ public class ServerThread extends Thread{
 		
 	}
 	
-	public boolean logged_FLAG(){
-		return false;
-	}
 	public void run(){
 		
 		
 		try{
-			FLAG_logged logged = new FLAG_logged();
 			BufferedReader fromClient = new BufferedReader(new InputStreamReader(SCSocket.getInputStream()));
 			PrintStream toClient = new PrintStream(SCSocket.getOutputStream());
 			String userName = null;
 			ServerSender sender = null;
 			ServerReceiver receiver = null;
 			
-			logged.setValue(false);
+			
+			this.logged.setValue(false);
+			this.quit.setValue(false);
+			
 			while(true){
-				if(logged.getValue() == false){
+				System.out.println("send " + this.logged.getValue());
+				if(this.logged.getValue() == false){
 					toClient.println("Please register and/or login");
 					
 					String action = fromClient.readLine();
 					
-					if(action.equals("login")){ /// && value false
- 						//Handle quit here
+					if(action.equals("quit") || this.quit.getValue() == true){
+						break;
+					}
+					
+					if(action.equals("login")){
 						userName = fromClient.readLine();
 						if(namePassword.users.containsKey(userName)){
 							if(!activeUsers.isLogged(userName)){
@@ -47,11 +51,11 @@ public class ServerThread extends Thread{
 								//Handle Quit here
 								if(namePassword.getPassword(userName).equals(password)){
 									activeUsers.add(userName);
-									logged.setValue(true);
+									this.logged.setValue(true);
 									System.out.println("User " + userName + " has logged in");
 									toClient.println("You have succesfuly logged in!");
 									sender = new ServerSender(toClient, activeUsers.getQueue(userName)); // BBBBBBB
-									receiver = new ServerReceiver(sender, userName, fromClient, activeUsers, logged); // AAAAAAAA
+									receiver = new ServerReceiver(sender, userName, fromClient, activeUsers, this.logged, this.quit); // AAAAAAAA
 									receiver.setName("RECEIVER_THREAD");
 									receiver.start();
 								}
@@ -62,6 +66,7 @@ public class ServerThread extends Thread{
 						}
 						else toClient.println("Incorrect credentials. Please retry.");
 					}
+					//////////////////////////////////////////////////////////////////////////////////////
 					
 					else if(action.equals("register")){
 							userName = fromClient.readLine();
@@ -74,6 +79,7 @@ public class ServerThread extends Thread{
 							}
 							else toClient.println("This username is already taken");
 					}
+					//////////////////////////////////////////////////////////////////////////////////////
 				}
 			}
 		}catch(IOException e){}

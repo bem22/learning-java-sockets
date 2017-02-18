@@ -14,7 +14,7 @@ public class Server {
 	public void run(){
 		UserCredentials namePassword = new UserCredentials(); // ALL REGISTERED USERS
 		LoggedUsers activeUsers = new LoggedUsers(); // ALL LOGGED USERS (0 when the server starts)
-		
+		int i = 0;
 		try {
 			SSocket = new ServerSocket(Port.number);
 			
@@ -22,14 +22,14 @@ public class Server {
 			System.out.println("Couldn't listen to port:" + Port.number);
 		}
 		try{
-			
 			while(true){
 				SCSocket = SSocket.accept();
+				i++;
 				System.out.println("New client on server");
 				ServerThread t = new ServerThread(SCSocket, activeUsers, namePassword);
+				t.setName("Client " + i);
 				t.start();
 			}
-
 		}catch (Exception e) {
 	    }
 	}
