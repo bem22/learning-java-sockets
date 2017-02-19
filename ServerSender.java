@@ -5,17 +5,14 @@ import java.io.*;
 public class ServerSender extends Thread {
 	private MessageQueue userQueue;
 	private PrintStream toClient;
-	
-	
 	public ServerSender(PrintStream toClient, MessageQueue userQueue) {
 		this.userQueue = userQueue;
 		this.toClient = toClient;
 	}
-	
 	public void sendInfo(String msg){
+		toClient.println();
 		toClient.println(msg);
 	}
-	
 	@Override
 	public void run(){
 		try{

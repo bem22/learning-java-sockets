@@ -11,10 +11,8 @@ public class UserCredentials {
 		users.put("nume3", "pw3");
 		users.put("luiza", "mihaismek");
 	}
-	
 	public String getPassword(String userName){
 		return users.get(userName);
-		
 	}
 
 }

@@ -9,13 +9,13 @@ public class ServerThread extends Thread{
 	private UserCredentials namePassword;
 	private FLAG_logged logged = new FLAG_logged();
 	private FLAG_quit quit = new FLAG_quit();
+	private GroupHash groups;
 	
-	
-	public ServerThread(Socket SCSocket, LoggedUsers activeUsers, UserCredentials namePassword){
+	public ServerThread(Socket SCSocket, LoggedUsers activeUsers, UserCredentials namePassword, GroupHash groups){
 		this.SCSocket = SCSocket;
 		this.activeUsers = activeUsers;
 		this.namePassword = namePassword;
-		
+		this.groups = groups;
 	}
 	
 	public void run(){
@@ -27,7 +27,6 @@ public class ServerThread extends Thread{
 			String userName = null;
 			ServerSender sender = null;
 			ServerReceiver receiver = null;
-			
 			
 			this.logged.setValue(false);
 			this.quit.setValue(false);
@@ -55,7 +54,7 @@ public class ServerThread extends Thread{
 									System.out.println("User " + userName + " has logged in");
 									toClient.println("You have succesfuly logged in!");
 									sender = new ServerSender(toClient, activeUsers.getQueue(userName)); // BBBBBBB
-									receiver = new ServerReceiver(sender, userName, fromClient, activeUsers, this.logged, this.quit); // AAAAAAAA
+									receiver = new ServerReceiver(sender, userName, fromClient, activeUsers, this.logged, this.quit, groups, namePassword); // AAAAAAAA
 									receiver.setName("RECEIVER_THREAD");
 									receiver.start();
 								}

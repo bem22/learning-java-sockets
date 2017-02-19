@@ -14,7 +14,7 @@ public class Server {
 	public void run(){
 		UserCredentials namePassword = new UserCredentials(); // ALL REGISTERED USERS
 		LoggedUsers activeUsers = new LoggedUsers(); // ALL LOGGED USERS (0 when the server starts)
-		int i = 0;
+		GroupHash groups = new GroupHash();
 		try {
 			SSocket = new ServerSocket(Port.number);
 			
@@ -24,10 +24,9 @@ public class Server {
 		try{
 			while(true){
 				SCSocket = SSocket.accept();
-				i++;
 				System.out.println("New client on server");
-				ServerThread t = new ServerThread(SCSocket, activeUsers, namePassword);
-				t.setName("Client " + i);
+				ServerThread t = new ServerThread(SCSocket, activeUsers, namePassword, groups);
+				t.setName("Client" + SCSocket.getLocalPort());
 				t.start();
 			}
 		}catch (Exception e) {

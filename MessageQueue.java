@@ -7,11 +7,8 @@ public class MessageQueue {
 	public void offer(Message m) {
 	    queue.offer(m);
 	}
-	
 	public Message take() throws InterruptedException {
-
 	        return(queue.take());
-	        
 	}
 
 }
