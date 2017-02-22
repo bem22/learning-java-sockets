@@ -7,12 +7,13 @@ import java.io.PrintStream;
 import java.net.Socket;
 
 
-public class Client {
-	Socket CSSocket;
+public class Client extends Thread{
+	public Socket CSSocket;
 	String serverName;
 	PrintStream toServer = null;
     BufferedReader fromServer = null;
     public ClientReceiver receiver;
+    public Printer printer;
     
     public Client(String serverName){
 		try{
@@ -25,19 +26,19 @@ public class Client {
 		
 	}
     public void run(){
+
+    	Thread.currentThread().setName("CLIENT");
 		try{
 			if(CSSocket.isConnected()){
-				receiver = new ClientReceiver(fromServer); // BBBBBB (Matches BBBBB in Server)
-				
+				receiver = new ClientReceiver(fromServer); 
 				receiver.start();
-			
 				int i = 1;
 				while(i==1){
-					
 				}
-			
+				
 				try{
 				    toServer.close();
+				    printer.join();
 				    receiver.join();
 				    fromServer.close();
 				    CSSocket.close();

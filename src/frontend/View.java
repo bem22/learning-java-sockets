@@ -3,14 +3,15 @@ package frontend;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowListener;
 
 import javax.swing.*;
 
 public class View extends JFrame{
 	
-	public LoginPanel lPanel = null;
-	public RegisterPanel rPanel = null;
-	public ChatPanel cPanel = null;
+	public LoginPanel lPanel = new LoginPanel();
+	public RegisterPanel rPanel = new RegisterPanel();
+	public ChatPanel cPanel = new ChatPanel();
 	
 	public View(){
 		initialize();
@@ -22,15 +23,11 @@ public class View extends JFrame{
 		this.setBounds(100, 100, 847, 477);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		
-		lPanel = new LoginPanel();
 		this.getContentPane().add(lPanel);
-		rPanel = new RegisterPanel();
 		this.getContentPane().add(rPanel);
+		
 		rPanel.setVisible(false);
 		lPanel.setVisible(true);
-		
-		
 	}
 	
 	public void register(){
@@ -44,11 +41,15 @@ public class View extends JFrame{
 	}
 	
 	public void chat(){
-		cPanel = new ChatPanel();
 		this.getContentPane().add(cPanel);
-		
 		lPanel.setVisible(false);
+		rPanel.setVisible(false);
 		cPanel.setVisible(true);
+	}
+	
+	public void logout(){
+		this.getContentPane().remove(cPanel);
+		lPanel.setVisible(true);
 	}
 	
 	public void loginListener(MouseListener listenForLogin){
@@ -58,12 +59,26 @@ public class View extends JFrame{
 		rPanel.toLogin.addMouseListener(listenForLogin);
 	}
 	
-	public void registerListener(ActionListener listenForRegister){
-		rPanel.registerButton.addActionListener(listenForRegister);
+	public void registerListener(MouseListener listenForRegister){
+		rPanel.registerButton.addMouseListener(listenForRegister);
 	}
 	
 	public void registerLabelListener(MouseListener listenForRegister){
 		lPanel.toRegister.addMouseListener(listenForRegister);
 	}
+	
+	public void quit(WindowListener listenForX){
+		this.addWindowListener(listenForX);
+	}
+	
+	public void logoutListener(MouseListener listenForLogout){
+		cPanel.logoutButton.addMouseListener(listenForLogout);
+	}
+	
+	public void sendListener(ActionListener listenForSend){
+		cPanel.sendButton.addActionListener(listenForSend);
+	}
+	
+	
 	
 }

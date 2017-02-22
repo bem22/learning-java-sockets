@@ -33,7 +33,7 @@ public class LoginPanel extends JPanel {
 		passwordLabel.setBackground(Color.DARK_GRAY);
 		this.add(passwordLabel);
 		
-		serverResponse.setBounds(315, 223, 158, 14);
+		serverResponse.setBounds(303, 223, 180, 14);
 		serverResponse.setHorizontalAlignment(SwingConstants.CENTER);
 		serverResponse.setForeground(Color.RED);
 		this.add(serverResponse);
