@@ -32,7 +32,12 @@ public class ServerThread extends Thread{
 			this.quit.setValue(false);
 			
 			while(true){
-				
+				if(this.logged.getValue() == true){
+					try {
+						Thread.currentThread().sleep(2500);
+					} catch (InterruptedException e) {
+					}
+				}
 				if(this.logged.getValue() == false){
 					toClient.println("Please register and/or login");
 					
