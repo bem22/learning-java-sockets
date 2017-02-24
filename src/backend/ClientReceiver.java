@@ -2,6 +2,8 @@ package backend;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class ClientReceiver extends Thread{
 	public BufferedReader fromServer;
@@ -9,6 +11,7 @@ public class ClientReceiver extends Thread{
 	public String s;
 	public String message;
 	public String[] onlineUsers;
+	public BlockingQueue<String> messages = new LinkedBlockingQueue<String>();
 	
 	public ClientReceiver(BufferedReader fromServer) {
 		this.fromServer = fromServer;
@@ -52,8 +55,7 @@ public class ClientReceiver extends Thread{
 					onlineUsers = s.split(",\\ ");
 				}
 				if(s.equals("event:Message")){
-					eHandler.setMessaged(true);
-					message = fromServer.readLine();
+					messages.add(fromServer.readLine());
 				}
 			}
 		} catch (IOException e){}

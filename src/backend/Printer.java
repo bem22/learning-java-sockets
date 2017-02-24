@@ -16,16 +16,14 @@ public class Printer extends Thread{
 	public void run(){
 		try {
 			while(true){
-				Thread.sleep(1230);
-				view.cPanel.onliners.removeAll();
-				if(client.receiver.eHandler.getPingReceived() && client.receiver.onlineUsers.length>0){
-				client.receiver.eHandler.setPingReceived(false);
-				view.cPanel.listall(client.receiver.onlineUsers);
-				}
+				Thread.sleep(15);
 				
-				if(client.receiver.eHandler.getMessaged()){
-				view.cPanel.chat.add(new JLabel(client.receiver.message));
-				client.receiver.eHandler.setMessaged(false);
+				if(!client.receiver.messages.isEmpty())
+				view.cPanel.listMessage(client.receiver.messages.take());
+				
+				if(client.receiver.eHandler.getPingReceived() && client.receiver.onlineUsers.length>0){
+					view.cPanel.onliners.removeAll();
+					view.cPanel.listall(client.receiver.onlineUsers);
 				}
 			}
 			

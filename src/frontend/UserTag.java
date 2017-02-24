@@ -8,44 +8,35 @@ import java.awt.event.MouseListener;
 import javax.swing.JLabel;
 
 public class UserTag extends JLabel{
-	public UserTag(String name){
+	public UserTag(String name, String target){
+		if (name.equals(target))
+			this.setBackground(Color.white);
+		else
+			this.setBackground(Color.DARK_GRAY);
+		
 		this.setText(name);
 		this.setIcon(getIcon());
 		this.setPreferredSize(new Dimension(85,20));
-		this.setBackground(Color.DARK_GRAY);
 		this.setForeground(Color.white);
 		this.setOpaque(true);
 		this.addMouseListener(new MouseListener(){
-
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
-
 			@Override
 			public void mousePressed(MouseEvent e) {
 				setTarget();
+				setBackground(Color.WHITE);
 			}
-
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
-
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
-
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
-			
 		});
 	}
 	

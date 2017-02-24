@@ -41,10 +41,7 @@ public class Controller{
 		
 		try {
 			printer.join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (InterruptedException e) {}
 	}
 	
 	class login implements MouseListener{
@@ -59,6 +56,7 @@ public class Controller{
 				client.send("login");
 				client.send(view.lPanel.userField.getText());
 				client.send(view.lPanel.pwField.getText());		
+				view.cPanel.loggedUser = view.lPanel.userField.getText();
 				view.lPanel.serverResponse.setText("");
 				view.lPanel.userField.setText("");
 				view.lPanel.pwField.setText("");

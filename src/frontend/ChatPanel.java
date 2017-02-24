@@ -22,6 +22,7 @@ class message extends JLabel{
 }
 public class ChatPanel extends JPanel {
 	
+		public String loggedUser = null;
 		public static String target = "";
 		public JButton logoutButton = new JButton("Logout");
 		public JButton sendButton = new JButton("Send");
@@ -44,7 +45,6 @@ public class ChatPanel extends JPanel {
 			onliners.setBounds(720, 41, 101, 386);
 			onliners.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 			this.add(onliners);
-			
 			
 			chat.setBounds(10, 11, 700, 334);
 			chat.setBackground(Color.GRAY);
@@ -69,9 +69,14 @@ public class ChatPanel extends JPanel {
 			chat.repaint();
 		}
 		
+		public void resetUI(){
+			loggedUser = null;
+		}
+		
 		public void listall (String [] users){
 			for(int i = 0; i < users.length; i++){
-				onliners.add(new UserTag(users[i]));
+				if(!users[i].equals(loggedUser))
+				onliners.add(new UserTag(users[i], target));
 				onliners.validate();
 				onliners.repaint();
 			}
@@ -83,5 +88,7 @@ public class ChatPanel extends JPanel {
 		public String getTarget(){
 			return target;
 		}
+		
+		
 
 }

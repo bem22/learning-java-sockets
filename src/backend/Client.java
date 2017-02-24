@@ -38,7 +38,6 @@ public class Client extends Thread{
 				
 				try{
 				    toServer.close();
-				    printer.join();
 				    receiver.join();
 				    fromServer.close();
 				    CSSocket.close();
@@ -52,13 +51,4 @@ public class Client extends Thread{
     public void send(String s){
     	toServer.println(s);
     }
-    
-    
-    
-    
-   
-	
-	
-	
-	
 }
