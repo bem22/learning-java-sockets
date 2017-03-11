@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.net.InetAddress;
 import java.net.Socket;
 
 
@@ -15,7 +16,7 @@ public class Client extends Thread{
     public ClientReceiver receiver;
     public Printer printer;
     
-    public Client(String serverName){
+    public Client(InetAddress serverName){
 		try{
 			CSSocket = new Socket(serverName, Port.number);
 			toServer = new PrintStream(CSSocket.getOutputStream());
