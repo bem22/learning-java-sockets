@@ -19,8 +19,6 @@ public class ServerThread extends Thread{
 	}
 	
 	public void run(){
-		//// asd
-		
 		
 		try{
 			BufferedReader fromClient = new BufferedReader(new InputStreamReader(SCSocket.getInputStream()));
