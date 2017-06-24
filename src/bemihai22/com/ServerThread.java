@@ -19,7 +19,6 @@ public class ServerThread extends Thread{
 	}
 	
 	public void run(){
-		
 		try{
 			BufferedReader fromClient = new BufferedReader(new InputStreamReader(SCSocket.getInputStream()));
 			PrintStream toClient = new PrintStream(SCSocket.getOutputStream());

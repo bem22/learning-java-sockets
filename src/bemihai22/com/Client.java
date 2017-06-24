@@ -11,11 +11,10 @@ public class Client {
     BufferedReader fromServer = null;
 
 
-	
-	public Client(String serverName){
+	public Client(){
 		try{
 			
-			CSSocket = new Socket(serverName, Port.number);
+			CSSocket = new Socket("35.176.55.3", Port.number);
 			toServer = new PrintStream(CSSocket.getOutputStream());
 			fromServer = new BufferedReader(new InputStreamReader(CSSocket.getInputStream()));
 		}
@@ -23,9 +22,9 @@ public class Client {
 		}
 		
 	}
+
 	
 	public void run(){
-		
 		if(CSSocket.isConnected()){
 			ClientSender sender = new ClientSender(toServer); // AAAAAAAA (Matches AAAAA in Server)
 			ClientReceiver receiver = new ClientReceiver(fromServer); // BBBBBB (Matches BBBBB in Server)
